@@ -55,3 +55,9 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['type-edit-(:num)'] = 'type/edit/$1';
 $route['type-delete-(:num)'] = 'type/delete/$1';
+
+$route['vendor-edit-(:num)'] = 'vendor/edit/$1';
+$route['vendor-delete-(:num)'] = 'vendor/delete/$1';
+
+$route['series-edit-(:num)'] = 'series/edit/$1';
+$route['series-delete-(:num)'] = 'series/delete/$1';

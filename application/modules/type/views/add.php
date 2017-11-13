@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label">Password input</label>
+                    <label class="control-label">Status</label>
                     <div class="controls">
                         <select class="span11" name="type_status" >
                             <option value="1">Active</option>
@@ -29,6 +29,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-success">Save</button>
+					<a href="<?php echo site_url('type');?>" class="btn btn-danger">Cancel</a>
                 </div>
             </form>
             </div>

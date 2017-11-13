@@ -2,35 +2,44 @@
     <div class="span6">
         <div class="widget-box">
             <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                <h5>Form Edit</h5>
+                <h5>Form Add</h5>
             </div>
             <div class="widget-content nopadding">
-                <form action="<?php echo site_url('type/save');?>" method="post" class="form-horizontal">
-                <input type="hidden" name="id" value="<?php echo $data['id'];?>">
+                <form action="<?php echo site_url('vendor/save');?>" method="post" class="form-horizontal">
+				<div class="control-group">
+                    <label class="control-label">Type :</label>
+                    <div class="controls">
+                    <select name="id_type" required="true" class="span11" placeholder="Type">
+						<?php foreach($type as $k=>$v) {?>
+							<option value="<?php echo $v['id'];?>"><?php echo $v['type_name'];?></option>
+						<?php } ?>
+					</select>
+                    </div>
+                </div>
                 <div class="control-group">
                     <label class="control-label">Name :</label>
                     <div class="controls">
-                    <input type="text" name="type_name" value="<?php echo $data['type_name'];?>" required="true" class="span11" placeholder="Name" />
+                    <input type="text" name="vendor_name" required="true" class="span11" placeholder="Name" />
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">Description :</label>
                     <div class="controls">
-                        <textarea name="type_description" class="textarea_editor span11" rows="6" placeholder="Enter text ..."><?php echo $data['type_description'];?></textarea>
+                        <textarea name="vendor_description" class="textarea_editor span11" rows="6" placeholder="Enter text ..."></textarea>
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label">Status</label>
                     <div class="controls">
-                        <select class="span11" name="type_status" >
-                            <option value="1" <?php echo ($data['type_status'] == "1" ? "selected" : "") ;?>>Active</option>
-                            <option value="2" <?php echo ($data['type_status'] == "2" ? "selected" : "") ;?>>Not Active</option>
+                        <select class="span11" name="vendor_status" >
+                            <option value="1">Active</option>
+                            <option value="2" selected>Not Active</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-success">Save</button>
-					<a href="<?php echo site_url('type');?>" class="btn btn-danger">Cancel</a>
+					<a href="<?php echo site_url('vendor');?>" class="btn btn-danger">Cancel</a>
                 </div>
             </form>
             </div>
