@@ -61,3 +61,9 @@ $route['vendor-delete-(:num)'] = 'vendor/delete/$1';
 
 $route['series-edit-(:num)'] = 'series/edit/$1';
 $route['series-delete-(:num)'] = 'series/delete/$1';
+
+$route['model-edit-(:num)'] = 'model/edit/$1';
+$route['model-delete-(:num)'] = 'model/delete/$1';
+
+$route['category-edit-(:num)'] = 'category/edit/$1';
+$route['category-delete-(:num)'] = 'category/delete/$1';
