@@ -67,3 +67,7 @@ $route['model-delete-(:num)'] = 'model/delete/$1';
 
 $route['category-edit-(:num)'] = 'category/edit/$1';
 $route['category-delete-(:num)'] = 'category/delete/$1';
+$route['category-detail-(:num)'] = 'subcategory/index/$1';
+
+$route['subcategory-edit-(:num)-(:num)'] = 'subcategory/edit/$1/$2';
+$route['subcategory-delete-(:num)-(:num)'] = 'subcategory/delete/$1/$2';

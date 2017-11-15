@@ -14,7 +14,7 @@
       <a href="#"><i class="icon icon-th-list"></i> <span>Spec</span> <span class="label label-important">2</span></a>
       <ul>
       <li> <a href="<?php echo site_url('category');?>"><i class="icon icon-signal"></i> <span>Category</span></a> </li>
-      <li> <a href="<?php echo site_url('subcategory');?>"><i class="icon icon-inbox"></i> <span>Subcategory</span></a> </li>
+      <li> <a href="<?php echo site_url('item');?>"><i class="icon icon-inbox"></i> <span>Item</span></a> </li>
       </ul>
     </li>
     <li><a href="<?php echo site_url('logout');?>"><i class="icon icon-fullscreen"></i> <span>Logout</span></a> </li>

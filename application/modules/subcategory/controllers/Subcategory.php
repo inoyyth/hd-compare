@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Category extends MX_Controller {
+class Subcategory extends MX_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -18,17 +18,18 @@ class Category extends MX_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
-	var $table = "spec_category";
+	var $table = "spec_subcategory";
 	
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array('M_category' => 'm_category'));
+		$this->load->model(array('M_subcategory' => 'm_subcategory'));
 		//$this->load->library(array('Auth_log'));
 	}
 
-	public function index()
+	public function index($id)
 	{
-		$data['title'] = "Category";
+        $data['title'] = "Subategory";
+        $data['id_spec_category'] = $id;
 		$data['view'] = "main";
 		$this->load->view('default',$data);
 	}
@@ -39,23 +40,20 @@ class Category extends MX_Controller {
         
         $field = array(
             $this->table.".*",
-            'm_type.type_name',
-            "IF(spec_category_status=1,'Active','Not Active') AS status"
+            "IF(spec_subcategory_status=1,'Active','Not Active') AS status"
         );
         
         $offset = ($page - 1) * $limit;
 
-        $join = array(
-			array('table' => 'm_type', 'where' => 'm_type.id=spec_category.id_type', 'join' => 'left')
-		);
+        $join = array();
         
         $like = array(
-            'spec_category_name'=>isset($_GET['name'])?$_GET['name']:"",
-            'spec_category_description'=>isset($_GET['description'])?$_GET['description']:"",
+            'spec_subcategory_name'=>isset($_GET['name'])?$_GET['name']:"",
+            'spec_subcategory_description'=>isset($_GET['description'])?$_GET['description']:"",
         );
-        $where = array('spec_category_status !=' => '3');
+        $where = array('spec_subcategory_status !=' => '3','id_spec_category' => $_GET['id_spec_category']);
         $sort = array(
-            'sort_field' => isset($_GET['sort'])?$_GET['sort']:"spec_category_position",
+            'sort_field' => isset($_GET['sort'])?$_GET['sort']:"spec_subcategory_position",
             'sort_direction' => isset($_GET['sort_dir'])?$_GET['sort_dir']:"asc"
         );
 
@@ -64,9 +62,9 @@ class Category extends MX_Controller {
             'limit' => $limit
         );
         
-        $list = $this->m_category->getListTable($field,$this->table, $join, $like, $where, $sort, $limit_row);
+        $list = $this->m_subcategory->getListTable($field,$this->table, $join, $like, $where, $sort, $limit_row);
 
-        $total_records = count($this->m_category->getListTable($field,$this->table, $join, $like, $where, $sort, false));
+        $total_records = count($this->m_subcategory->getListTable($field,$this->table, $join, $like, $where, $sort, false));
         $total_pages = ceil($total_records / $limit);
         $output = array(
             "last_page" => $total_pages,
@@ -77,38 +75,38 @@ class Category extends MX_Controller {
         echo json_encode($output);
 	}
 	
-	public function add() {
-        $data['title'] = "Category - Add";
-        $data['type'] = $this->db->get_where('m_type',array('type_status' => 1))->result_array();
-		$data['view'] = "category/add";
+	public function add($id_spec_category) {
+        $data['title'] = "Subcategory - Add";
+        $data['id_spec_category'] = $id_spec_category;
+		$data['view'] = "subcategory/add";
 		$this->load->view('default',$data);
 	}
 
-	public function edit($id) {
-        $data['title'] = "Category - Edit";
-        $data['type'] = $this->db->get_where('m_type',array('type_status' => 1))->result_array();
+	public function edit($id_spec_category, $id) {
+        $data['id_spec_category'] = $id_spec_category;
+		$data['title'] = "Subategory - Edit";
         $data['data'] = $this->db->get_where($this->table, array('id' => $id))->row_array();
-        $data['view'] = 'category/edit';
+        $data['view'] = 'subcategory/edit';
         $this->load->view('default', $data);
     }
 
-    function delete($id) {
-        if ($this->db->update($this->table, array('spec_category_status' => 3),array('id'=>$id))) {
+    function delete($id_spec_category, $id) {
+        if ($this->db->update($this->table, array('spec_subcategory_status' => 3),array('id'=>$id))) {
             $this->session->set_flashdata('success', 'Data Berhasil Di Hapus !');
         } else {
             $this->session->set_flashdata('error', 'Data Gagal Di Hapus !');
         }
-        redirect("category");
+        redirect('category-detail-' . $id_spec_category);
     }
 
     function save() {
         if ($_POST) {
-            if ($this->m_category->save()) {
+            if ($this->m_subcategory->save()) {
                 $this->session->set_flashdata('success', 'Data Berhasil Di Simpan !');
             } else {
                 $this->session->set_flashdata('error', 'Data Gagal Di Simpan !');
             }
-            redirect("category");
+            redirect('category-detail-'.$this->input->post('id_spec_category'));
         } else {
             show_404();
         }
@@ -116,7 +114,8 @@ class Category extends MX_Controller {
 
     function sortData() {
         $dt = json_decode($this->input->post('data'),true);
-        $query = $this->m_category->sortData($dt);
+        $id_spec_category = json_decode($this->input->post('id_spec_category'),true);
+        $query = $this->m_subcategory->sortData($dt,$id_spec_category);
         if ($query) {
             return true;
         }
