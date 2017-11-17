@@ -53,6 +53,8 @@ $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['logout'] = 'login/logout';
+
 $route['type-edit-(:num)'] = 'type/edit/$1';
 $route['type-delete-(:num)'] = 'type/delete/$1';
 
