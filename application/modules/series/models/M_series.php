@@ -6,6 +6,7 @@ class M_series extends CI_Model {
     public function save() {
         $id = $this->input->post('id');
         $data = array(
+            'id_type' => $this->input->post('id_type'),
 			'id_vendor' => $this->input->post('id_vendor'),
             'series_name' => $this->input->post('series_name'),
             'series_description' => $this->input->post('series_description'),

@@ -7,12 +7,21 @@
             <div class="widget-content nopadding">
                 <form action="<?php echo site_url('series/save');?>" method="post" class="form-horizontal">
 				<div class="control-group">
+                    <label class="control-label">Type :</label>
+                    <div class="controls">
+                    <select name="id_type" id="id_type" required="true" class="span11" placeholder="Type">
+                        <option value="" disabled selected> - Select -</option>
+						<?php foreach($type as $k=>$v) {?>
+							<option value="<?php echo $v['id'];?>"><?php echo $v['type_name'];?></option>
+						<?php } ?>
+					</select>
+                    </div>
+                </div>
+                <div class="control-group">
                     <label class="control-label">Vendor :</label>
                     <div class="controls">
-                    <select name="id_vendor" required="true" class="span11" placeholder="Type">
-						<?php foreach($vendor as $k=>$v) {?>
-							<option value="<?php echo $v['id'];?>"><?php echo $v['vendor_name'];?></option>
-						<?php } ?>
+                    <select name="id_vendor" id="id_vendor" required="true" class="span11" placeholder="Type">
+                        <option value="" disabled selected> - Select Type First -</option>
 					</select>
                     </div>
                 </div>
@@ -49,5 +58,25 @@
 <script>
     $(document).ready(function (){
         $('.textarea_editor').wysihtml5();
+        $("#id_type").change(function (){
+            $("#id_vendor").find('option').remove();
+            var ajx = ajaxVendor($(this).val());
+            var html = '<option value="" selected disabled> - Select -</option>';
+            ajx.done(function(e){
+                $.each(e, function(i,v){
+                    html += '<option value=' + v.id + '>' + v.vendor_name + '</option>';
+                });
+            $("#id_vendor").append(html);
+            });
+        });
     });
+
+    function ajaxVendor(id) {
+        return $.ajax({
+            url:"<?php echo base_url('model/getVendor');?>",
+            data:{id:id},
+            type:'GET',
+            dataType: 'json'
+        });
+    }
 </script>

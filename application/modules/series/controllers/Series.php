@@ -23,7 +23,7 @@ class Series extends MX_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model(array('M_series' => 'm_series'));
-		//$this->load->library(array('Auth_log'));
+		$this->load->library(array('Auth_log'));
 	}
 
 	public function index()
@@ -39,6 +39,7 @@ class Series extends MX_Controller {
         
         $field = array(
             $this->table.".*",
+            "m_type.type_name",
 			"m_vendor.vendor_name",
             "IF(series_status=1,'Active','Not Active') AS status"
         );
@@ -46,7 +47,8 @@ class Series extends MX_Controller {
         $offset = ($page - 1) * $limit;
 
         $join = array(
-			array('table' => 'm_vendor', 'where' => 'm_vendor.id=m_series.id_vendor', 'join' => 'left')
+            array('table' => 'm_vendor', 'where' => 'm_vendor.id=m_series.id_vendor', 'join' => 'left'),
+            array('table' => 'm_type', 'where' => 'm_type.id=m_series.id_type', 'join' => 'left')
 		);
         
         $like = array(
@@ -78,14 +80,15 @@ class Series extends MX_Controller {
 	}
 	
 	public function add() {
-		$data['vendor'] = $this->db->get_where('m_vendor',array('vendor_status' => 1))->result_array();
+		$data['type'] = $this->db->get_where('m_type',array('type_status' => 1))->result_array();
 		$data['title'] = "Series - Add";
 		$data['view'] = "series/add";
 		$this->load->view('default',$data);
 	}
 
 	public function edit($id) {
-		$data['vendor'] = $this->db->get_where('m_vendor',array('vendor_status' => 1))->result_array();
+        $data['type'] = $this->db->get_where('m_type',array('type_status' => 1))->result_array();
+        $data['vendor'] = $this->db->get_where('m_vendor',array('vendor_status' => 1))->result_array();
 		$data['title'] = "Series - Edit";
         $data['data'] = $this->db->get_where($this->table, array('id' => $id))->row_array();
         $data['view'] = 'series/edit';

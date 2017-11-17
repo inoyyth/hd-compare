@@ -6,6 +6,8 @@ class M_model extends CI_Model {
     public function save() {
         $id = $this->input->post('id');
         $data = array(
+            'id_type' => $this->input->post('id_type'),
+            'id_vendor' => $this->input->post('id_vendor'),
 			'id_series' => $this->input->post('id_series'),
             'model_name' => $this->input->post('model_name'),
             'model_description' => $this->input->post('model_description'),
@@ -38,5 +40,21 @@ class M_model extends CI_Model {
         $this->db->order_by($sort['sort_field'],$sort['sort_direction']);
         $this->db->limit($limit['limit'],$limit['offset']);
         return $sql = $this->db->get()->result_array();
+    }
+
+    public function getVendor($id_type) {
+        $this->db->select('id,vendor_name');
+        $this->db->from('m_vendor');
+        $this->db->where(array('id_type'=>$id_type));
+        $this->db->order_by('vendor_name','asc');
+        return $this->db->get()->result_array();
+    }
+
+    public function getSeries($id_vendor) {
+        $this->db->select('id,series_name');
+        $this->db->from('m_series');
+        $this->db->where(array('id_vendor'=>$id_vendor));
+        $this->db->order_by('series_name','asc');
+        return $this->db->get()->result_array();
     }
 }

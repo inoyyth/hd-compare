@@ -18,6 +18,13 @@ class Dashboard extends MX_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+	 
+	 public function __construct() {
+		parent::__construct();
+		//$this->load->model(array('M_series' => 'm_series'));
+		$this->load->library(array('Auth_log'));
+	}
+	
 	public function index()
 	{
 		$data['title'] = "Dashboard";

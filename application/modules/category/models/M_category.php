@@ -12,7 +12,7 @@ class M_category extends CI_Model {
             'spec_category_status' => $this->input->post('spec_category_status')
         );
         if (empty($id)) {
-            $this->db->insert($this->table,array_merge($data,array('spec_category_position' => $this->__getPosition())));
+            $this->db->insert($this->table,array_merge($data,array('spec_category_position' => $this->__getPosition($this->input->post('id_type')))));
             return true;
         } else {
             $this->db->update($this->table,$data, array('id' => $id));
@@ -41,9 +41,10 @@ class M_category extends CI_Model {
         return $sql = $this->db->get()->result_array();
     }
 
-    private function __getPosition() {
+    private function __getPosition($id_type) {
         $this->db->select_max('spec_category_position');
         $this->db->from($this->table);
+		$this->db->where('id_type',$id_type);
         $res = $this->db->get()->row_array();
 
         if($res['spec_category_position'] != NULL) { 

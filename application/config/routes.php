@@ -71,3 +71,5 @@ $route['category-detail-(:num)'] = 'subcategory/index/$1';
 
 $route['subcategory-edit-(:num)-(:num)'] = 'subcategory/edit/$1/$2';
 $route['subcategory-delete-(:num)-(:num)'] = 'subcategory/delete/$1/$2';
+
+$route['item-edit-(:num)'] = 'item/edit/$1';

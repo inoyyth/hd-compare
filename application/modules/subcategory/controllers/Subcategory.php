@@ -23,7 +23,7 @@ class Subcategory extends MX_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model(array('M_subcategory' => 'm_subcategory'));
-		//$this->load->library(array('Auth_log'));
+		$this->load->library(array('Auth_log'));
 	}
 
 	public function index($id)

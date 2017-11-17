@@ -16,18 +16,19 @@
 <script>
     $(document).ready(function () {
         $("#main-list-table").tabulator({
+            layout:"fitData",
             fitColumns: true,
             pagination: true,
             movableCols: true,
             height: "320px", // set height of table (optional),
             pagination:"remote",
             paginationSize: 10,
-            fitColumns:true, //fit columns to width of table (optional),
             ajaxType: "GET", //ajax HTTP request type
             ajaxURL: "<?php echo base_url('series/getListTable'); ?>", //ajax URL
             //ajaxParams:{key1:"value1", key2:"value2"}, //ajax parameters
             columns: [//Define Table Columns
-                {formatter: "rownum", align: "center", width: 40},
+                {formatter: "rownum", align: "center", width: 40, headerSort:false, frozen:true,},
+                {title: "Type", field: "type_name", sorter: "string", tooltip: true},
 				{title: "Vendor", field: "vendor_name", sorter: "string", tooltip: true},
                 {title: "Name", field: "series_name", sorter: "string", tooltip: true},
                 {title: "Description", field: "series_description", sorter: "string", tooltip: true},

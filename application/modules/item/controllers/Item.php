@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Model extends MX_Controller {
+class Item extends MX_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -22,14 +22,14 @@ class Model extends MX_Controller {
 	
 	public function __construct() {
 		parent::__construct();
-		$this->load->model(array('M_model' => 'm_model'));
+		$this->load->model(array('M_item' => 'm_item'));
 		$this->load->library(array('Auth_log'));
 	}
 
 	public function index()
 	{
-		$data['title'] = "Model";
-		$data['view'] = "model/main";
+		$data['title'] = "Item";
+		$data['view'] = "main";
 		$this->load->view('default',$data);
 	}
 
@@ -68,9 +68,9 @@ class Model extends MX_Controller {
             'limit' => $limit
         );
         
-        $list = $this->m_model->getListTable($field,$this->table, $join, $like, $where, $sort, $limit_row);
+        $list = $this->m_item->getListTable($field,$this->table, $join, $like, $where, $sort, $limit_row);
 
-        $total_records = count($this->m_model->getListTable($field,$this->table, $join, $like, $where, $sort, false));
+        $total_records = count($this->m_item->getListTable($field,$this->table, $join, $like, $where, $sort, false));
         $total_pages = ceil($total_records / $limit);
         $output = array(
             "last_page" => $total_pages,
@@ -80,51 +80,26 @@ class Model extends MX_Controller {
         //output to json format
         echo json_encode($output);
 	}
-	
-	public function add() {
-		$data['type'] = $this->db->get_where('m_type',array('type_status' => 1))->result_array();
-		$data['title'] = "Model - Add";
-		$data['view'] = "model/add";
-		$this->load->view('default',$data);
-	}
 
 	public function edit($id) {
-		$data['type'] = $this->db->get_where('m_type',array('type_status' => 1))->result_array();
-		$data['title'] = "Model - Edit";
-        $data['data'] = $this->db->get_where($this->table, array('id' => $id))->row_array();
-        $data['view'] = 'model/edit';
+		$data['title'] = "Item - Edit";
+        $data['data'] = $this->m_item->getItemForm($id);
+        $data['item'] = $this->db->get_where('item',array('id_model'=>$id))->result_array(); ///var_dump($data['item']);die;
+        $data['category'] = $this->m_item->getCategory();
+        $data['view'] = 'item/edit';
         $this->load->view('default', $data);
-    }
-
-    function delete($id) {
-        if ($this->db->update($this->table, array('model_status' => 3),array('id'=>$id))) {
-            $this->session->set_flashdata('success', 'Data Berhasil Di Hapus !');
-        } else {
-            $this->session->set_flashdata('error', 'Data Gagal Di Hapus !');
-        }
-        redirect("model");
     }
 
     function save() {
         if ($_POST) {
-            if ($this->m_model->save()) {
+            if ($this->m_item->save()) {
                 $this->session->set_flashdata('success', 'Data Berhasil Di Simpan !');
             } else {
                 $this->session->set_flashdata('error', 'Data Gagal Di Simpan !');
             }
-            redirect("model");
+            redirect("item");
         } else {
             show_404();
         }
-    }
-
-    public function getVendor() {
-        $res = $this->m_model->getVendor($this->input->get('id'));
-        echo json_encode($res);
-    }
-
-    public function getSeries() {
-        $res = $this->m_model->getSeries($this->input->get('id'));
-        echo json_encode($res);
     }
 }

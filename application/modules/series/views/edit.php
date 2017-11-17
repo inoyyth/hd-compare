@@ -8,12 +8,20 @@
                 <form action="<?php echo site_url('series/save');?>" method="post" class="form-horizontal">
                 <input type="hidden" name="id" value="<?php echo $data['id'];?>">
 				<div class="control-group">
+                    <label class="control-label">Type :</label>
+                    <div class="controls">
+                    <select name="id_type" id="id_type" required="true" class="span11" placeholder="Type">
+						<?php foreach($type as $k=>$v) {?>
+							<option value="<?php echo $v['id'];?>" <?php echo ($data['id_type'] == $v['id'] ? "selected" : "");?>><?php echo $v['type_name'];?></option>
+						<?php } ?>
+					</select>
+                    </div>
+                </div>
+                <div class="control-group">
                     <label class="control-label">Vendor :</label>
                     <div class="controls">
-                    <select name="id_vendor" required="true" class="span11" placeholder="Type">
-						<?php foreach($vendor as $k=>$v) {?>
-							<option value="<?php echo $v['id'];?>" <?php echo ($data['id_vendor'] == $v['id'] ? "selected" : "");?>><?php echo $v['vendor_name'];?></option>
-						<?php } ?>
+                    <select name="id_vendor" id="id_vendor" required="true" class="span11" placeholder="Type">
+						
 					</select>
                     </div>
                 </div>
@@ -50,5 +58,39 @@
 <script>
     $(document).ready(function (){
         $('.textarea_editor').wysihtml5();
+        //onload
+        var ajx = ajaxVendor($("#id_type").val());
+        var html = '';
+        ajx.done(function(e){
+            $.each(e, function(i,v){
+                var a = "";
+                if (v.id == <?php echo $data['id_vendor'];?>) {
+                     a  = "selected";
+                }
+                html += '<option value=' + v.id + ' ' + a + '>' + v.vendor_name + '</option>';
+            });
+            $("#id_vendor").append(html);
+        });
+
+        $("#id_type").change(function (){
+            $("#id_vendor").find('option').remove();
+            var ajx = ajaxVendor($(this).val());
+            var html = '<option value="" selected disabled> - Select -</option>';
+            ajx.done(function(e){
+                $.each(e, function(i,v){
+                    html += '<option value=' + v.id + '>' + v.vendor_name + '</option>';
+                });
+            $("#id_vendor").append(html);
+            });
+        });
     });
+
+    function ajaxVendor(id) {
+        return $.ajax({
+            url:"<?php echo base_url('model/getVendor');?>",
+            data:{id:id},
+            type:'GET',
+            dataType: 'json'
+        });
+    }
 </script>

@@ -29,7 +29,7 @@
             columns: [//Define Table Columns
                 {formatter: "rownum", align: "center", width: 40},
                 {title: "Name", field: "type_name", sorter: "string", tooltip: true},
-                {title: "Description", field: "type_description", sorter: "string", tooltip: true},
+                {title: "Description", field: "type_description", sorter: "string", tooltip: true,formatter:"html"},
                 {title: "Status", field: "status", sorter: "string", tooltip: true}
             ],
             selectable: 1,
