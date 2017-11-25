@@ -52,26 +52,3 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
-$route['logout'] = 'login/logout';
-
-$route['type-edit-(:num)'] = 'type/edit/$1';
-$route['type-delete-(:num)'] = 'type/delete/$1';
-
-$route['vendor-edit-(:num)'] = 'vendor/edit/$1';
-$route['vendor-delete-(:num)'] = 'vendor/delete/$1';
-
-$route['series-edit-(:num)'] = 'series/edit/$1';
-$route['series-delete-(:num)'] = 'series/delete/$1';
-
-$route['model-edit-(:num)'] = 'model/edit/$1';
-$route['model-delete-(:num)'] = 'model/delete/$1';
-
-$route['category-edit-(:num)'] = 'category/edit/$1';
-$route['category-delete-(:num)'] = 'category/delete/$1';
-$route['category-detail-(:num)'] = 'subcategory/index/$1';
-
-$route['subcategory-edit-(:num)-(:num)'] = 'subcategory/edit/$1/$2';
-$route['subcategory-delete-(:num)-(:num)'] = 'subcategory/delete/$1/$2';
-
-$route['item-edit-(:num)'] = 'item/edit/$1';

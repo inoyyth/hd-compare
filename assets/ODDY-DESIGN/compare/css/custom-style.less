@@ -1,0 +1,130 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+.form-unit {
+  margin-top: 20px;
+  .form-group {
+    margin: 10px 0 ;
+    width: 100%;
+    .col-md-2 {
+      @media (max-width: 480px) {
+        padding: 0;
+      }
+      label {
+        text-align: left !important;
+        display: inline-block;
+        font-weight: bold;
+        @media (max-width: 480px) {
+          margin-bottom: 0;
+        }
+      }
+    }
+    .form-option {
+      display: flex;
+      @media (max-width: 480px) {
+        flex-direction: column;
+        padding: 0;
+      }
+      .form-control {
+        width: 100%;
+        margin: 0 7px 0 0;
+        padding: 0 4px;
+        height: 29px !important;
+        border-radius: 0;
+        border: 1px solid #d8d8d8;
+        font-size: 14px;
+        &:nth-last-child(1) {
+          margin-right: 0 !important;
+        }
+        @media (max-width: 480px){
+          margin: 7px 0;
+        }
+      }
+    }
+  }
+}
+
+.table-unit {
+  margin: 20px 0;
+  .table-responsive {
+    padding: 0 15px;
+    @media (max-width: 480px) {
+      padding: 0;
+    }
+    table {
+      table-layout: fixed;
+      @media (max-width: 480px) {
+        table-layout: inherit;
+      }
+      thead>tr>th {
+        vertical-align: top;
+        color: #23b4cc;
+      }
+    }
+  }
+}
+
+.title {
+  width: 100%;
+  display: flex;
+  .col-md-2 {
+    @media (max-width: 670px) {
+      display: none;
+    }
+  }
+}
+
+.benchmark-unit {
+  width: 100%;
+  .table-responsive {
+    padding: 0 15px;
+    @media (max-width: 480px) {
+      padding: 0;
+    }
+    .table {
+      table-layout: fixed;
+      //font-weight: bold;
+      @media (max-width: 480px) {
+        table-layout: auto;
+      }
+      tr>th {
+        border-bottom: none;
+      }
+      tr>th, tr>td {
+        vertical-align: top;
+        height: 70px;
+      }
+      tr>th:first-child, tr>td:first-child {
+        position: relative;
+      }
+      .show-notes {
+        float: right;
+        word-break: break-all;
+        a {
+          cursor: pointer;
+          color: #000000;
+          &:hover {
+            color: #23B4CC;
+          }
+        }
+        .hidden-notes {
+          position: absolute;
+          padding: 0 10px 7px;
+          bottom: 0;
+          left: 0;
+          //display: none;
+          width: 100%;
+          word-break: break-all;
+          color: #b3b3b3;
+        }
+      }
+    }
+  }
+}
+
+.toggle-row {
+  font-size: 9px;
+  text-decoration: underline;
+  color: #b3b3b3;
+}
