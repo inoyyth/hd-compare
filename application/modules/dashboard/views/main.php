@@ -155,6 +155,7 @@
       //////////////// Logic Dropdown ///////////////////////////
       $(document).ready(function () {
             $("#sel_tgsel").change(function(){
+                clearTitle();
                 getParams($(this).val());
                 var ajxVendor = getVendor($(this).val());
                 ajxVendor.done(function(e){
@@ -350,6 +351,15 @@
           $(".row-hide-"+row).show();
           $(".tr-"+row).attr("data-show","active");
         }
+
+        function clearTitle() {
+          for (i = 0; i <= 4; i++) {
+            $("#t"+i+"-1").text('');
+            $("#t"+i+"-2").text('');
+            $("#t"+i+"-3").text('');
+          }
+        }
+
     </script>
 
   </body>
